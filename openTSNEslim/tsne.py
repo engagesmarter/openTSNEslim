@@ -12,11 +12,11 @@ try:
 except Exception:  # pragma: no cover - allow slim runtime without sklearn
     BaseEstimator = object
 
-from openTSNE import _tsne
-from openTSNE import initialization as initialization_scheme
-from openTSNE.affinity import Affinities, MultiscaleMixture
-from openTSNE.quad_tree import QuadTree
-from openTSNE import utils
+from openTSNEslim import _tsne
+from openTSNEslim import initialization as initialization_scheme
+from openTSNEslim.affinity import Affinities, MultiscaleMixture
+from openTSNEslim.quad_tree import QuadTree
+from openTSNEslim import utils
 
 
 EPSILON = np.finfo(np.float64).eps

@@ -3,18 +3,18 @@ from functools import partial
 
 from scipy.spatial.distance import pdist, squareform
 
-import openTSNE
-import openTSNE.affinity
-import openTSNE.initialization
+import openTSNEslim
+import openTSNEslim.affinity
+import openTSNEslim.initialization
 import numpy as np
-from openTSNE.callbacks import VerifyExaggerationError
+from openTSNEslim.callbacks import VerifyExaggerationError
 from sklearn import datasets
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.manifold import SpectralEmbedding
 
-TSNE = partial(openTSNE.TSNE, neighbors="exact", negative_gradient_method="bh")
+TSNE = partial(openTSNEslim.TSNE, neighbors="exact", negative_gradient_method="bh")
 
 
 class TestTSNECorrectness(unittest.TestCase):
@@ -41,7 +41,7 @@ class TestTSNECorrectness(unittest.TestCase):
         """Verify that the advanced flow does not crash."""
         embedding = self.tsne.prepare_initial(self.x)
         embedding = embedding.optimize(20, exaggeration=12)
-        embedding = embedding.optimize(20)  # type: openTSNE.TSNEEmbedding
+        embedding = embedding.optimize(20)  # type: openTSNEslim.TSNEEmbedding
         self.assertFalse(np.any(np.isnan(embedding)))
 
         partial_embedding = embedding.prepare_partial(self.x_test)
@@ -118,7 +118,7 @@ class TestTSNECorrectness(unittest.TestCase):
         )
 
         # Set up the initial embedding
-        embedding = openTSNE.TSNE(
+        embedding = openTSNEslim.TSNE(
             early_exaggeration_iter=0,
             n_iter=50,
             neighbors="exact",
@@ -158,7 +158,7 @@ class TestTSNECorrectness(unittest.TestCase):
         )
 
         # Set up the initial embedding
-        embedding = openTSNE.TSNE(
+        embedding = openTSNEslim.TSNE(
             early_exaggeration_iter=0,
             n_iter=50,
             neighbors="exact",
@@ -195,7 +195,7 @@ class TestTSNECorrectness(unittest.TestCase):
         )
 
         # Set up the initial embedding
-        embedding = openTSNE.TSNE(
+        embedding = openTSNEslim.TSNE(
             neighbors="exact",
             negative_gradient_method="bh",
             early_exaggeration_iter=0,
@@ -217,7 +217,7 @@ class TestTSNECorrectness(unittest.TestCase):
         )
 
         # Set up the initial embedding
-        embedding = openTSNE.TSNE(
+        embedding = openTSNEslim.TSNE(
             neighbors="exact",
             negative_gradient_method="fft",
             early_exaggeration_iter=0,
@@ -239,9 +239,9 @@ class TestTSNECorrectness(unittest.TestCase):
         )
 
         # Set up the initial embedding
-        init = openTSNE.initialization.pca(x_train)
-        affinity = openTSNE.affinity.PerplexityBasedNN(x_train, method="exact")
-        embedding = openTSNE.TSNEEmbedding(
+        init = openTSNEslim.initialization.pca(x_train)
+        affinity = openTSNEslim.affinity.PerplexityBasedNN(x_train, method="exact")
+        embedding = openTSNEslim.TSNEEmbedding(
             init, affinity, negative_gradient_method="bh", random_state=42
         )
         embedding.optimize(n_iter=50, inplace=True)
@@ -259,9 +259,9 @@ class TestTSNECorrectness(unittest.TestCase):
         )
 
         # Set up the initial embedding
-        init = openTSNE.initialization.pca(x_train)
-        affinity = openTSNE.affinity.PerplexityBasedNN(x_train, method="exact")
-        embedding = openTSNE.TSNEEmbedding(
+        init = openTSNEslim.initialization.pca(x_train)
+        affinity = openTSNEslim.affinity.PerplexityBasedNN(x_train, method="exact")
+        embedding = openTSNEslim.TSNEEmbedding(
             init, affinity, negative_gradient_method="fft", random_state=42
         )
         embedding.optimize(n_iter=100, inplace=True)
@@ -274,7 +274,7 @@ class TestTSNECorrectness(unittest.TestCase):
         np.testing.assert_equal(new_embedding_1, new_embedding_2)
 
     def test_bh_with_n_components_gt_3(self):
-        tsne = openTSNE.TSNE(
+        tsne = openTSNEslim.TSNE(
             n_components=4,
             negative_gradient_method="bh",
             neighbors="exact",
@@ -285,7 +285,7 @@ class TestTSNECorrectness(unittest.TestCase):
             tsne.fit(x)
 
     def test_fft_with_n_components_gt_2(self):
-        tsne = openTSNE.TSNE(
+        tsne = openTSNEslim.TSNE(
             n_components=3,
             negative_gradient_method="fft",
             neighbors="exact",
@@ -349,8 +349,8 @@ class TestSpectralInitializationCorrectness(unittest.TestCase):
         x[:, 0] *= 5
 
         # Perform spectral embedding via sklearn and via openTSNE
-        P = openTSNE.affinity.PerplexityBasedNN(x).P
-        embedding1 = openTSNE.initialization.spectral(P, tol=0, add_jitter=False)
+        P = openTSNEslim.affinity.PerplexityBasedNN(x).P
+        embedding1 = openTSNEslim.initialization.spectral(P, tol=0, add_jitter=False)
         embedding2 = SpectralEmbedding(affinity="precomputed").fit_transform(P)
 
         np.testing.assert_almost_equal(
@@ -372,7 +372,7 @@ class TestEarlyExaggerationCollapse(unittest.TestCase):
         for n in n_samples:
             for d in n_dims:
                 x = np.random.randn(n, d)
-                embedding = openTSNE.TSNE(random_state=42).fit(x)
+                embedding = openTSNEslim.TSNE(random_state=42).fit(x)
                 self.assertGreater(np.max(np.abs(embedding)), 1e-8)
 
 
@@ -394,6 +394,6 @@ class TestDataMatricesWithDuplicatedRows(unittest.TestCase):
         cls.x, cls.y = x[idx], y[idx]
 
     def test_works_without_error(self):
-        openTSNE.TSNE(
+        openTSNEslim.TSNE(
             early_exaggeration=100, negative_gradient_method="bh", random_state=0
         ).fit(self.x)

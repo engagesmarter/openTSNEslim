@@ -1,6 +1,6 @@
 import numpy as np
 
-from openTSNE import utils
+from openTSNEslim import utils
 
 
 def rescale(x, inplace=False, target_std=1e-4):
@@ -206,7 +206,7 @@ def spectral(
     # Find leading eigenvectors
     k = n_components + 1
     # v0 initializatoin is taken from sklearn.utils._arpack._init_arpack_v0()
-    random_state = check_random_state(random_state)
+    random_state = utils.check_random_state(random_state)
     v0 = random_state.uniform(-1, 1, A.shape[0])
     eigvals, eigvecs = sp.linalg.eigsh(
         A, M=D, k=k, tol=tol, maxiter=max_iter, which="LM", v0=v0

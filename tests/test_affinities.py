@@ -8,8 +8,8 @@ from scipy.spatial.distance import squareform, pdist
 from sklearn import datasets
 from sklearn.model_selection import train_test_split
 
-from openTSNE import affinity, nearest_neighbors
-from openTSNE.utils import is_package_installed
+from openTSNEslim import affinity, nearest_neighbors
+from openTSNEslim.utils import is_package_installed
 from tests.test_tsne import check_mock_called_with_kwargs
 
 affinity.log.setLevel(logging.ERROR)

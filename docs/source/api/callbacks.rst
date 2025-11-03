@@ -1,7 +1,7 @@
 Callbacks
 =========
 
-.. automodule:: openTSNE.callbacks
+.. automodule:: openTSNEslim.callbacks
 
     .. autoclass:: Callback
         :members: optimization_about_to_start

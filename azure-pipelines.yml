@@ -94,7 +94,7 @@ jobs:
   # Since Python automatically adds `cwd` to `sys.path`, it's important we remove the local folder
   # containing our code from the working directory. Otherwise, the tests will use the local copy
   # instead of the installed package. We can easily achieve this by renaming the source folder.
-  - bash: mv openTSNE src
+  - bash: mv openTSNEslim src
     displayName: 'Remove source files from path'
 
   - script: pytest -v

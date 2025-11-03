@@ -68,7 +68,7 @@ This will serve as a baseline comparison.
 .. code:: ipython3
 
     %%time
-    embedding_standard = openTSNE.TSNE(
+    embedding_standard = openTSNEslim.TSNE(
         perplexity=30,
         initialization="random",
         metric="euclidean",
@@ -106,7 +106,7 @@ can be omitted.
 .. code:: ipython3
 
     %%time
-    embedding_pca = openTSNE.TSNE(
+    embedding_pca = openTSNEslim.TSNE(
         perplexity=30,
         initialization="pca",
         metric="euclidean",
@@ -143,7 +143,7 @@ parameter.
 .. code:: ipython3
 
     %%time
-    embedding_cosine = openTSNE.TSNE(
+    embedding_cosine = openTSNEslim.TSNE(
         perplexity=30,
         initialization="random",
         metric="cosine",
@@ -175,7 +175,7 @@ Lastly, let’s see how our embedding looks with both the changes.
 .. code:: ipython3
 
     %%time
-    embedding_pca_cosine = openTSNE.TSNE(
+    embedding_pca_cosine = openTSNEslim.TSNE(
         perplexity=30,
         initialization="pca",
         metric="cosine",
@@ -253,7 +253,7 @@ Perplexity: 500
 .. code:: ipython3
 
     %%time
-    embedding_pca_cosine_500 = openTSNE.TSNE(
+    embedding_pca_cosine_500 = openTSNEslim.TSNE(
         perplexity=500,
         initialization="pca",
         metric="cosine",
@@ -303,7 +303,7 @@ perplexity to something smaller to emphasize the local structure.
 .. code:: ipython3
 
     %%time
-    embedding_annealing = openTSNE.TSNE(
+    embedding_annealing = openTSNEslim.TSNE(
         perplexity=500, metric="cosine", initialization="pca", n_jobs=8, random_state=3
     ).fit(x)
 
@@ -358,7 +358,7 @@ much of the global structure.
 .. code:: ipython3
 
     %%time
-    affinities_multiscale_mixture = openTSNE.affinity.Multiscale(
+    affinities_multiscale_mixture = openTSNEslim.affinity.Multiscale(
         x,
         perplexities=[50, 500],
         metric="cosine",
@@ -375,7 +375,7 @@ much of the global structure.
 
 .. code:: ipython3
 
-    %time init = openTSNE.initialization.pca(x, random_state=42)
+    %time init = openTSNEslim.initialization.pca(x, random_state=42)
 
 
 .. parsed-literal::
@@ -388,7 +388,7 @@ Now, we just optimize just like we would standard t-SNE.
 
 .. code:: ipython3
 
-    embedding_multiscale = openTSNE.TSNE(n_jobs=8).fit(
+    embedding_multiscale = openTSNEslim.TSNE(n_jobs=8).fit(
         affinities=affinities_multiscale_mixture,
         initialization=init,
     )

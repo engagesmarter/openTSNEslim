@@ -5,9 +5,9 @@ from typing import Any, Dict
 
 import numpy as np
 
-from openTSNE.tsne import TSNEEmbedding
-from openTSNE import affinity as affinity_mod
-from openTSNE import nearest_neighbors as nn_mod
+from openTSNEslim.tsne import TSNEEmbedding
+from openTSNEslim import affinity as affinity_mod
+from openTSNEslim import nearest_neighbors as nn_mod
 
 
 def export_inference_bundle(embedding: TSNEEmbedding, bundle_path: str | Path) -> None:
@@ -85,7 +85,7 @@ def load_inference_bundle(bundle_path: str | Path) -> TSNEEmbedding:
 
     # Recreate embedding with same optimization params
     gd_params = meta.get("gradient_descent_params", {})
-    from openTSNE.tsne import gradient_descent
+    from openTSNEslim.tsne import gradient_descent
 
     emb = TSNEEmbedding(
         Y.copy(),
