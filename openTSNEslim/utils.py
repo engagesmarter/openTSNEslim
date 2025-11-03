@@ -20,6 +20,20 @@ class Timer:
             print("   --> Time elapsed: %.2f seconds" % (end_time - self.start_time))
 
 
+def check_random_state(seed):
+    """Minimal replacement for sklearn.utils.check_random_state.
+
+    Returns a numpy RandomState given a seed, RandomState, or None.
+    """
+    if seed is None or seed is np.random:
+        return np.random.mtrand._rand
+    if isinstance(seed, (int, np.integer)):
+        return np.random.RandomState(seed)
+    if isinstance(seed, np.random.RandomState):
+        return seed
+    raise ValueError("Invalid random_state")
+
+
 def deprecate_parameter(parameter):
     def wrapper(f):
         @wraps(f)

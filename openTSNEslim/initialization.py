@@ -1,7 +1,4 @@
 import numpy as np
-import scipy.sparse as sp
-from sklearn.decomposition import PCA
-from sklearn.utils import check_random_state
 
 from openTSNE import utils
 
@@ -50,7 +47,7 @@ def jitter(x, inplace=False, scale=0.01, random_state=None):
         x = np.array(x, copy=True)
 
     target_std = np.std(x[:, 0]) * scale
-    random_state = check_random_state(random_state)
+    random_state = utils.check_random_state(random_state)
     x += random_state.normal(0, target_std, x.shape)
 
     return x
@@ -80,7 +77,7 @@ def random(n_samples, n_components=2, random_state=None, verbose=False):
     initialization: np.ndarray
 
     """
-    random_state = check_random_state(random_state)
+    random_state = utils.check_random_state(random_state)
     if isinstance(n_samples, np.ndarray):
         n_samples = n_samples.shape[0]
     embedding = random_state.normal(0, 1e-4, (n_samples, n_components))
@@ -128,6 +125,9 @@ def pca(
     """
     timer = utils.Timer("Calculating PCA-based initialization...", verbose)
     timer.__enter__()
+
+    # Lazy import to avoid sklearn dependency at slim runtime
+    from sklearn.decomposition import PCA  # type: ignore
 
     pca_ = PCA(
         n_components=n_components, svd_solver=svd_solver, random_state=random_state
@@ -190,6 +190,9 @@ def spectral(
     initialization: np.ndarray
 
     """
+    # Lazy import to avoid scipy dependency at slim runtime unless used
+    import scipy.sparse as sp  # type: ignore
+
     if A.ndim != 2:
         raise ValueError("The graph adjacency matrix must be a 2-dimensional matrix.")
     if A.shape[0] != A.shape[1]:

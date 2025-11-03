@@ -2,9 +2,6 @@ import logging
 import warnings
 
 import numpy as np
-from scipy.spatial.distance import cdist
-from sklearn import neighbors
-from sklearn.utils import check_random_state
 
 from openTSNE import utils
 
@@ -154,7 +151,10 @@ class Sklearn(KNNIndex):
         if self.knn_kwargs is not None:
             knn_kwargs_.update(self.knn_kwargs)
 
-        self.index = neighbors.NearestNeighbors(
+        # Lazy import to avoid sklearn dependency in slim runtime unless used
+        from sklearn import neighbors as skl_neighbors  # type: ignore
+
+        self.index = skl_neighbors.NearestNeighbors(
             metric=effective_metric,
             metric_params=self.metric_params,
             n_jobs=self.n_jobs,
@@ -168,9 +168,17 @@ class Sklearn(KNNIndex):
         # If using cosine distance, the computed distances will be wrong and
         # need to be recomputed
         if self.metric == "cosine":
+            # Recompute cosine distances without scipy
+            def _cosine_distances_row(u, V):
+                u = np.asarray(u)
+                V = np.asarray(V)
+                num = V @ u
+                denom = (np.linalg.norm(u) + 1e-12) * (np.linalg.norm(V, axis=1) + 1e-12)
+                return 1.0 - (num / denom)
+
             distances = np.vstack(
                 [
-                    cdist(np.atleast_2d(x), data[idx], metric="cosine")
+                    _cosine_distances_row(x, data[idx])
                     for x, idx in zip(data, indices)
                 ]
             )
@@ -208,9 +216,16 @@ class Sklearn(KNNIndex):
                     "building the index? Please rebuild the index using cosine "
                     "similarity."
                 )
+            def _cosine_distances_row(u, V):
+                u = np.asarray(u)
+                V = np.asarray(V)
+                num = V @ u
+                denom = (np.linalg.norm(u) + 1e-12) * (np.linalg.norm(V, axis=1) + 1e-12)
+                return 1.0 - (num / denom)
+
             distances = np.vstack(
                 [
-                    cdist(np.atleast_2d(x), self.__data[idx], metric="cosine")
+                    _cosine_distances_row(x, self.__data[idx])
                     for x, idx in zip(query, indices)
                 ]
             )
@@ -258,7 +273,7 @@ class Annoy(KNNIndex):
 
         self.index = AnnoyIndex(data.shape[1], annoy_metric)
 
-        random_state = check_random_state(self.random_state)
+        random_state = utils.check_random_state(self.random_state)
         self.index.set_seed(random_state.randint(np.iinfo(np.int32).max))
 
         for i in range(N):
@@ -544,7 +559,7 @@ class NNDescent(KNNIndex):
                     f"Run with verbose=True, to see indices of the failed points."
                 )
             distances[mask] = 1
-            rs = check_random_state(self.random_state)
+            rs = utils.check_random_state(self.random_state)
             fake_indices = rs.choice(
                 np.sum(mask), size=np.sum(mask) * indices.shape[1], replace=True
             )
@@ -609,7 +624,7 @@ class HNSW(KNNIndex):
             "l2": "l2",
         }[self.metric]
 
-        random_state = check_random_state(self.random_state)
+        random_state = utils.check_random_state(self.random_state)
         random_seed = random_state.randint(np.iinfo(np.int32).max)
 
         self.index = Index(space=hnsw_space, dim=data.shape[1])
@@ -722,11 +737,16 @@ class PrecomputedDistanceMatrix(KNNIndex):
 
     """
     def __init__(self, distance_matrix, k):
-        nn = neighbors.NearestNeighbors(metric="precomputed")
-        nn.fit(distance_matrix)
-        self.distances, self.indices = nn.kneighbors(n_neighbors=k)
-        self.n_samples = distance_matrix.shape[0]
+        # Pure NumPy implementation to avoid sklearn dependency
+        dm = np.asarray(distance_matrix)
+        if dm.ndim != 2 or dm.shape[0] != dm.shape[1]:
+            raise ValueError("distance_matrix must be a square 2D array")
+        self.n_samples = dm.shape[0]
         self.k = k
+        # argsort to get nearest neighbors (excluding self at position 0)
+        order = np.argsort(dm, axis=1)
+        self.indices = order[:, :k]
+        self.distances = np.take_along_axis(dm, self.indices, axis=1)
 
     def build(self):
         return self.indices, self.distances
