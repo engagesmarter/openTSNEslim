@@ -1,6 +1,6 @@
 sklearn
 =======
 
-.. automodule:: openTSNE.sklearn
+.. automodule:: openTSNEslim.sklearn
     :members: TSNE
     :undoc-members:

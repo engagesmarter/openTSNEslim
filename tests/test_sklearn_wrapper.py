@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 
-from openTSNE.sklearn import TSNE
+from openTSNEslim.sklearn import TSNE
 
 
 class TestTSNECorrectness(unittest.TestCase):

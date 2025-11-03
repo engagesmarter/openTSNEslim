@@ -120,7 +120,7 @@ jobs:
       # Since Python automatically adds `cwd` to `sys.path`, it's important we remove the local folder
       # containing our code from the working directory. Otherwise, the tests will use the local copy
       # instead of the installed package. We can easily achieve this by renaming the source folder.
-      - bash: mv openTSNE src
+      - bash: mv openTSNEslim src
         displayName: 'Remove source files from path'
 
       - bash: ls -lRh dist
@@ -133,7 +133,7 @@ jobs:
           architecture: 'x64'
         displayName: 'Use Python $(python.version)'
 
-      - bash: python -m pip install -v --force-reinstall --find-links=dist/ openTSNE
+      - bash: python -m pip install -v --force-reinstall --find-links=dist/ openTSNEslim
         displayName: 'Install wheel'
 
       - script: pip install pynndescent
@@ -190,7 +190,7 @@ jobs:
       - bash: ls -lRh dist
         displayName: 'List built files'
 
-      - bash: python -m pip -v install --no-binary openTSNE --find-links=dist/ openTSNE --no-cache
+      - bash: python -m pip -v install --no-binary openTSNEslim --find-links=dist/ openTSNEslim --no-cache
         displayName: 'Install package'
 
       - script: pip install pynndescent
@@ -203,7 +203,7 @@ jobs:
       # Since Python automatically adds `cwd` to `sys.path`, it's important we remove the local folder
       # containing our code from the working directory. Otherwise, the tests will use the local copy
       # instead of the installed package. We can easily achieve this by renaming the source folder.
-      - bash: mv openTSNE src
+      - bash: mv openTSNEslim src
         displayName: 'Remove source files from path'
 
       - bash: pip install pytest

@@ -7,7 +7,7 @@
 cimport numpy as cnp
 cnp.import_array()
 import numpy as np
-cimport openTSNE._matrix_mul.matrix_mul
+cimport openTSNEslim._matrix_mul.matrix_mul
 
 
 cdef extern from 'fftw3.h':

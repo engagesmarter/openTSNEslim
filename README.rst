@@ -64,7 +64,7 @@ systems.
 
 To squeeze the most out of openTSNE, you may also consider installing
 FFTW3 prior to installation. FFTW3 implements the Fast Fourier
-Transform, which is heavily used in openTSNE. If FFTW3 is not available,
+Transform, which is heavily used in openTSNEslim. If FFTW3 is not available,
 openTSNE will use numpy’s implementation of the FFT, which is slightly
 slower than FFTW. The difference is only noticeable with large data sets
 containing millions of data points.

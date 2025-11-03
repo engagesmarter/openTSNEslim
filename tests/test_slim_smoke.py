@@ -3,10 +3,10 @@ import tempfile
 
 import numpy as np
 
-from openTSNE.affinity import PerplexityBasedNN
-from openTSNE.initialization import random as init_random
-from openTSNE.tsne import TSNEEmbedding, gradient_descent
-from openTSNE.inference_io import export_inference_bundle, load_inference_bundle
+from openTSNEslim.affinity import PerplexityBasedNN
+from openTSNEslim.initialization import random as init_random
+from openTSNEslim.tsne import TSNEEmbedding, gradient_descent
+from openTSNEslim.inference_io import export_inference_bundle, load_inference_bundle
 
 
 def test_transform_smoke_without_sklearn_scipy():

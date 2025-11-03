@@ -22,9 +22,9 @@ def test_transform_path_works_with_blocked_sklearn_scipy(monkeypatch):
     if os.environ.get("TRY_IMPORT_SKLEARN") == "1":
         import sklearn  # noqa: F401  # this should be blocked and raise ImportError
 
-    from openTSNE.affinity import PerplexityBasedNN
-    from openTSNE.initialization import random as init_random
-    from openTSNE.tsne import TSNEEmbedding, gradient_descent
+    from openTSNEslim.affinity import PerplexityBasedNN
+    from openTSNEslim.initialization import random as init_random
+    from openTSNEslim.tsne import TSNEEmbedding, gradient_descent
 
     rng = np.random.RandomState(0)
     X_ref = rng.normal(size=(150, 6)).astype(np.float32)
