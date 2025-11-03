@@ -7,7 +7,10 @@ from types import SimpleNamespace
 from time import time
 
 import numpy as np
-from sklearn.base import BaseEstimator
+try:
+    from sklearn.base import BaseEstimator
+except Exception:  # pragma: no cover - allow slim runtime without sklearn
+    BaseEstimator = object
 
 from openTSNE import _tsne
 from openTSNE import initialization as initialization_scheme

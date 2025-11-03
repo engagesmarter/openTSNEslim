@@ -4,12 +4,16 @@ import operator
 from functools import reduce
 
 import numpy as np
-import scipy.sparse as sp
+try:
+    import scipy.sparse as sp  # type: ignore
+except Exception:  # pragma: no cover - optional for slim runtime
+    sp = None
 
 from openTSNE import _tsne
 from openTSNE import nearest_neighbors
 from openTSNE import utils
 from openTSNE.utils import is_package_installed
+from openTSNE.light_csr import LightCSR
 
 import warnings
 
@@ -380,7 +384,13 @@ def get_knn_index(
         return nearest_neighbors.PrecomputedDistanceMatrix(data, k=k)
 
     preferred_approx_method = nearest_neighbors.Annoy
-    if is_package_installed("pynndescent") and (sp.issparse(data) or metric not in [
+    is_sparse = False
+    if sp is not None:
+        try:
+            is_sparse = sp.issparse(data)
+        except Exception:
+            is_sparse = False
+    if is_package_installed("pynndescent") and (is_sparse or metric not in [
         "cosine",
         "euclidean",
         "manhattan",
@@ -494,23 +504,47 @@ def joint_probabilities_nn(
     )
     conditional_P = np.asarray(conditional_P)
 
-    P = sp.csr_matrix(
-        (
-            conditional_P.ravel(),
-            neighbors.ravel(),
-            range(0, n_samples * k_neighbors + 1, k_neighbors),
-        ),
-        shape=(n_samples, n_reference_samples),
-    )
+    if sp is not None:
+        P = sp.csr_matrix(
+            (
+                conditional_P.ravel(),
+                neighbors.ravel(),
+                range(0, n_samples * k_neighbors + 1, k_neighbors),
+            ),
+            shape=(n_samples, n_reference_samples),
+        )
+    else:
+        # Build lightweight CSR for slim runtime
+        indptr = np.arange(0, n_samples * k_neighbors + 1, k_neighbors, dtype=np.int32)
+        P = LightCSR(
+            data=conditional_P.ravel(),
+            indices=neighbors.ravel(),
+            indptr=indptr,
+            shape=(n_samples, n_reference_samples),
+        )
 
     # Symmetrize the probability matrix
     if symmetrize:
+        if sp is None:
+            raise RuntimeError("Symmetrization requires scipy.sparse in slim runtime.")
         P = (P + P.T) / 2
 
     if normalization == "pair-wise":
-        P /= np.sum(P)
+        if sp is not None:
+            P /= np.sum(P)
+        else:
+            total = float(np.sum(P.data))
+            if total > 0:
+                P /= total
     elif normalization == "point-wise":
-        P = sp.diags(np.asarray(1 / P.sum(axis=1)).ravel()) @ P
+        if sp is not None:
+            P = sp.diags(np.asarray(1 / P.sum(axis=1)).ravel()) @ P
+        else:
+            # Ensure rows sum to 1 by renormalizing data within each row
+            row_sums = conditional_P.sum(axis=1)
+            row_sums[row_sums == 0] = 1.0
+            conditional_P /= row_sums[:, None]
+            P.data = conditional_P.ravel()
 
     return P
 

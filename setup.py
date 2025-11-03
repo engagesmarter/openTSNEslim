@@ -287,12 +287,11 @@ setup(
     python_requires=">=3.9",
     install_requires=[
         "numpy>=1.16.6",
-        "scikit-learn>=0.20",
-        "scipy",
     ],
     extras_require={
         "hnsw": "hnswlib~=0.4.0",
         "pynndescent": "pynndescent~=0.5.0",
+        "train": ["scikit-learn>=0.20", "scipy"],
     },
     ext_modules=extensions,
     cmdclass={"build_ext": CythonBuildExt, "convert_notebooks": ConvertNotebooksToDocs},
