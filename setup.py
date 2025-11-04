@@ -252,19 +252,18 @@ __version__: str = ""  # This is overridden by the next line
 exec(open(os.path.join("openTSNE", "version.py")).read())
 
 setup(
-    name="openTSNE",
-    description="Extensible, parallel implementations of t-SNE",
+    name="openTSNEslim",
+    description="openTSNEslim is a slimmed down version of openTSNE that doesn't require use of scikit-learn or scipy.",
     long_description=readme(),
     version=__version__,
     license="BSD-3-Clause",
 
-    author="Pavlin Poličar",
-    author_email="pavlin.g.p@gmail.com",
-    url="https://github.com/pavlin-policar/openTSNE",
+    author="Sam Pink",
+    author_email="sam@engagesmarter.com",
+    url="https://github.com/engagesmarter/openTSNEslim",
     project_urls={
         "Documentation": "https://opentsne.readthedocs.io/",
-        "Source": "https://github.com/pavlin-policar/openTSNE",
-        "Issue Tracker": "https://github.com/pavlin-policar/openTSNE/issues",
+        "Source": "https://github.com/engagesmarter/openTSNEslim",
     },
     classifiers=[
         "Development Status :: 5 - Production/Stable",

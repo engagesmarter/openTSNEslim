@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "openTSNEslim"
-version = "1.0.2"
+version = "1.0.4"
 authors = [
   { name="Pavlin Poličar", email="pavlin.g.p@gmail.com" },
   { name="Sam Pink", email="sam@engagesmarter.com" },
