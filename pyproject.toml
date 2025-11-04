@@ -7,9 +7,9 @@ name = "openTSNEslim"
 version = "1.0.4"
 authors = [
   { name="Pavlin Poličar", email="pavlin.g.p@gmail.com" },
-  { name="Sam Pink", email="sam@engagesmarter.com" },
+  { name="Sam Pink", email="sam@engagesmarter.ai" },
 ]
-description = "openTSNEslim is a slimmed down version of openTSNE that doesn't require use of scikit-learn or scipy."
+description = "openTSNEslim is a slimmed down version of openTSNE that doesn't require use of scikit-learn or scipy for inference. This is useful for creating a smaller bundle for deployment."
 readme = "README.rst"
 requires-python = ">=3.9"
 classifiers = [

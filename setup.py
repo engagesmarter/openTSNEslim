@@ -259,7 +259,7 @@ setup(
     license="BSD-3-Clause",
 
     author="Sam Pink",
-    author_email="sam@engagesmarter.com",
+    author_email="sam@engagesmarter.ai",
     url="https://github.com/engagesmarter/openTSNEslim",
     project_urls={
         "Documentation": "https://opentsne.readthedocs.io/",
