@@ -1,9 +1,9 @@
-import openTSNEslim
+import openTSNE
 import numpy as np
 
 
-class TSNE(openTSNEslim.TSNE):
-    __doc__ = openTSNEslim.TSNE.__doc__
+class TSNE(openTSNE.TSNE):
+    __doc__ = openTSNE.TSNE.__doc__
 
     def fit(self, X, y=None):
         """Fit X into an embedded space.
@@ -40,7 +40,7 @@ class TSNE(openTSNEslim.TSNE):
     def transform(self, X, *args, **kwargs):
         """Apply dimensionality reduction to X.
 
-        See :meth:`openTSNEslim.TSNEEmbedding.transform` for additional parameters.
+        See :meth:`openTSNE.TSNEEmbedding.transform` for additional parameters.
 
         Parameters
         ----------

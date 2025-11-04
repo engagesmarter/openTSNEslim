@@ -3,7 +3,7 @@ import warnings
 
 import numpy as np
 
-from openTSNEslim import utils
+from openTSNE import utils
 
 log = logging.getLogger(__name__)
 
@@ -257,7 +257,7 @@ class Annoy(KNNIndex):
         )
         timer.__enter__()
 
-        from openTSNEslim.dependencies.annoy import AnnoyIndex
+        from openTSNE.dependencies.annoy import AnnoyIndex
 
         N = data.shape[0]
 
@@ -367,7 +367,7 @@ class Annoy(KNNIndex):
         import base64
         from os import path
 
-        from openTSNEslim.dependencies.annoy import AnnoyIndex
+        from openTSNE.dependencies.annoy import AnnoyIndex
 
         # If a base64 index is given, we have to load the index
         if "b64_index" in state:
@@ -469,7 +469,7 @@ class NNDescent(KNNIndex):
         ):
             warnings.warn(
                 "`pynndescent` has recently changed which distance metrics are supported, "
-                "and `openTSNEslim.nearest_neighbors` has not been updated. Please notify the "
+                "and `openTSNE.nearest_neighbors` has not been updated. Please notify the "
                 "developers of this change."
             )
 
@@ -480,7 +480,7 @@ class NNDescent(KNNIndex):
                 warnings.warn(
                     f"`pynndescent` requires callable metrics to be "
                     f"compiled with `numba`, but `{metric.__name__}` is not compiled. "
-                    f"`openTSNEslim.nearest_neighbors.NNDescent` "
+                    f"`openTSNE.nearest_neighbors.NNDescent` "
                     f"will attempt to compile the function. "
                     f"If this results in an error, then the function may not be "
                     f"compatible with `numba.njit` and should be rewritten. "
