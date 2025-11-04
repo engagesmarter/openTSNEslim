@@ -2,7 +2,7 @@ openTSNEslim
 
 ========
 
-openTSNEslim is a slimmed down version of openTSNE that doesn't require use of scikit-learn or scipy.
+openTSNEslim is a slimmed down version of openTSNE that doesn't require use of scikit-learn or scipy for inference. This is useful for creating a smaller bundle for deployment.
 
 Forked repository create by Pavlin Poličar from https://github.com/pavlin-policar/openTSNE
 
