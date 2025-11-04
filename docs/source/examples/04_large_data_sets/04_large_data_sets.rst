@@ -104,7 +104,7 @@ several places throughout the notebook, and can take a long time to run.
 .. code:: ipython3
 
     %%time
-    aff50 = openTSNEslim.affinity.PerplexityBasedNN(
+    aff50 = openTSNE.affinity.PerplexityBasedNN(
         x,
         perplexity=50,
         n_jobs=32,
@@ -121,7 +121,7 @@ several places throughout the notebook, and can take a long time to run.
 .. code:: ipython3
 
     %%time
-    aff500 = openTSNEslim.affinity.PerplexityBasedNN(
+    aff500 = openTSNE.affinity.PerplexityBasedNN(
         x,
         perplexity=500,
         n_jobs=32,
@@ -145,12 +145,12 @@ First, let’s see what standard t-SNE does.
     # Because we're given the data representation as the top 50 principal components
     # we can just use the top 2 components as the initilization. There is no sense in
     # calculating PCA on a PCA representation
-    init = openTSNEslim.initialization.rescale(x[:, :2])
+    init = openTSNE.initialization.rescale(x[:, :2])
 
 .. code:: ipython3
 
     %%time
-    embedding_standard = openTSNEslim.TSNE(
+    embedding_standard = openTSNE.TSNE(
         n_jobs=32,
         verbose=True,
     ).fit(affinities=aff50, initialization=init)
@@ -205,7 +205,7 @@ clusters. Let’s see if that helps.
 .. code:: ipython3
 
     %%time
-    embedding_exag = openTSNEslim.TSNE(
+    embedding_exag = openTSNE.TSNE(
         exaggeration=4,
         n_jobs=32,
         verbose=True,
@@ -255,7 +255,7 @@ Using a larger perplexity
 .. code:: ipython3
 
     %%time
-    embedding_aff500 = openTSNEslim.TSNE(
+    embedding_aff500 = openTSNE.TSNE(
         n_jobs=32,
         verbose=True,
     ).fit(affinities=aff500, initialization=init)
@@ -304,7 +304,7 @@ Using a larger perplexity
 .. code:: ipython3
 
     %%time
-    embedding_aff500_exag4 = openTSNEslim.TSNE(
+    embedding_aff500_exag4 = openTSNE.TSNE(
         exaggeration=4,
         n_jobs=32,
         verbose=True,
@@ -374,7 +374,7 @@ Create sample embedding
 .. code:: ipython3
 
     %%time
-    sample_affinities = openTSNEslim.affinity.PerplexityBasedNN(
+    sample_affinities = openTSNE.affinity.PerplexityBasedNN(
         x_sample,
         perplexity=500,
         n_jobs=32,
@@ -395,7 +395,7 @@ Create sample embedding
 
 .. code:: ipython3
 
-    %time sample_init = openTSNEslim.initialization.pca(x_sample, random_state=42)
+    %time sample_init = openTSNE.initialization.pca(x_sample, random_state=42)
 
 
 .. parsed-literal::
@@ -406,7 +406,7 @@ Create sample embedding
 
 .. code:: ipython3
 
-    %time sample_embedding = openTSNEslim.TSNE(n_jobs=32, verbose=True).fit(affinities=sample_affinities, initialization=sample_init)
+    %time sample_embedding = openTSNE.TSNE(n_jobs=32, verbose=True).fit(affinities=sample_affinities, initialization=sample_init)
 
 
 .. parsed-literal::
@@ -493,7 +493,7 @@ Learn the full embedding
 
 .. code:: ipython3
 
-    embedding = openTSNEslim.TSNEEmbedding(
+    embedding = openTSNE.TSNEEmbedding(
         init_full,
         aff50,
         n_jobs=32,

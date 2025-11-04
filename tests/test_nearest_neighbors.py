@@ -12,8 +12,8 @@ from sklearn import datasets
 
 from sklearn.utils import check_random_state
 
-from openTSNEslim import nearest_neighbors
-from openTSNEslim.utils import is_package_installed
+from openTSNE import nearest_neighbors
+from openTSNE.utils import is_package_installed
 from .test_tsne import check_mock_called_with_kwargs
 
 
@@ -135,7 +135,7 @@ class TestAnnoy(KNNIndexTestMixin, unittest.TestCase):
 
     def test_knn_kwargs(self):
         with patch(
-            "openTSNEslim.dependencies.annoy.AnnoyIndex",
+            "openTSNE.dependencies.annoy.AnnoyIndex",
             autospec=True,
         ) as mock:
             params = dict(n_trees=10)

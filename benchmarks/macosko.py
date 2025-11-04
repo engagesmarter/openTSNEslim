@@ -2,8 +2,8 @@ import gzip
 import pickle
 from os import path
 
-import openTSNEslim
-from openTSNEslim import utils
+import openTSNE
+from openTSNE import utils
 
 with utils.Timer("Loading data...", verbose=True):
     with gzip.open(path.join("data", "macosko_2015.pkl.gz"), "rb") as f:
@@ -18,7 +18,7 @@ y, cluster_ids = data["CellType1"], data["CellType2"]
 # with Timer("Running fast_tsne..."):
 #     fast_tsne(x, nthreads=1)
 
-affinities = openTSNEslim.affinity.PerplexityBasedNN(
+affinities = openTSNE.affinity.PerplexityBasedNN(
     x,
     perplexity=30,
     metric="cosine",
@@ -28,9 +28,9 @@ affinities = openTSNEslim.affinity.PerplexityBasedNN(
     verbose=True,
 )
 
-init = openTSNEslim.initialization.spectral(affinities.P, verbose=True)
+init = openTSNE.initialization.spectral(affinities.P, verbose=True)
 
-embedding = openTSNEslim.TSNEEmbedding(
+embedding = openTSNE.TSNEEmbedding(
     init,
     affinities,
     negative_gradient_method="fft",

@@ -1,5 +1,5 @@
 Initialization
 ==============
 
-.. automodule:: openTSNEslim.initialization
+.. automodule:: openTSNE.initialization
     :members: pca, spectral, random, rescale, jitter

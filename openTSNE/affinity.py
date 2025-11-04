@@ -9,11 +9,11 @@ try:
 except Exception:  # pragma: no cover - optional for slim runtime
     sp = None
 
-from openTSNEslim import _tsne
-from openTSNEslim import nearest_neighbors
-from openTSNEslim import utils
-from openTSNEslim.utils import is_package_installed
-from openTSNEslim.light_csr import LightCSR
+from openTSNE import _tsne
+from openTSNE import nearest_neighbors
+from openTSNE import utils
+from openTSNE.utils import is_package_installed
+from openTSNE.light_csr import LightCSR
 
 import warnings
 
@@ -139,7 +139,7 @@ class PerplexityBasedNN(Affinities):
         Optional keyword arguments that will be passed to the ``knn_index``.
 
     knn_index: Optional[nearest_neighbors.KNNIndex]
-        Optionally, a precomputed ``openTSNEslim.nearest_neighbors.KNNIndex`` object
+        Optionally, a precomputed ``openTSNE.nearest_neighbors.KNNIndex`` object
         can be specified. This option will ignore any KNN-related parameters.
         When ``knn_index`` is specified, ``data`` must be set to None.
 
@@ -606,7 +606,7 @@ class FixedSigmaNN(Affinities):
         Optional keyword arguments that will be passed to the ``knn_index``.
 
     knn_index: Optional[nearest_neighbors.KNNIndex]
-        Optionally, a precomptued ``openTSNEslim.nearest_neighbors.KNNIndex`` object
+        Optionally, a precomptued ``openTSNE.nearest_neighbors.KNNIndex`` object
         can be specified. This option will ignore any KNN-related parameters.
         When ``knn_index`` is specified, ``data`` must be set to None.
 
@@ -830,7 +830,7 @@ class MultiscaleMixture(Affinities):
         Optional keyword arguments that will be passed to the ``knn_index``.
 
     knn_index: Optional[nearest_neighbors.KNNIndex]
-        Optionally, a precomptued ``openTSNEslim.nearest_neighbors.KNNIndex`` object
+        Optionally, a precomptued ``openTSNE.nearest_neighbors.KNNIndex`` object
         can be specified. This option will ignore any KNN-related parameters.
         When ``knn_index`` is specified, ``data`` must be set to None.
 
@@ -1132,7 +1132,7 @@ class Multiscale(MultiscaleMixture):
     verbose: bool
 
     knn_index: Optional[nearest_neighbors.KNNIndex]
-        Optionally, a precomptued ``openTSNEslim.nearest_neighbors.KNNIndex`` object
+        Optionally, a precomptued ``openTSNE.nearest_neighbors.KNNIndex`` object
         can be specified. This option will ignore any KNN-related parameters.
         When ``knn_index`` is specified, ``data`` must be set to None.
 
@@ -1230,7 +1230,7 @@ class Uniform(Affinities):
         Optional keyword arguments that will be passed to the ``knn_index``.
 
     knn_index: Optional[nearest_neighbors.KNNIndex]
-        Optionally, a precomptued ``openTSNEslim.nearest_neighbors.KNNIndex`` object
+        Optionally, a precomptued ``openTSNE.nearest_neighbors.KNNIndex`` object
         can be specified. This option will ignore any KNN-related parameters.
         When ``knn_index`` is specified, ``data`` must be set to None.
 

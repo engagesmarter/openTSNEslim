@@ -1,5 +1,16 @@
-openTSNE
+openTSNEslim
+
 ========
+
+openTSNEslim is a slimmed down version of openTSNE that doesn't require use of scikit-learn or scipy.
+
+Forked repository create by Pavlin Poličar from https://github.com/pavlin-policar/openTSNE
+
+
+openTSNE (original repository)
+
+========
+
 
 |Build Status| |ReadTheDocs Badge| |License Badge|
 
@@ -19,55 +30,19 @@ openTSNE is a modular Python implementation of t-Distributed Stochasitc Neighbor
 Installation
 ------------
 
-openTSNE can be installed on all `supported versions of Python <https://devguide.python.org/versions/>`_.
-
-Conda
-~~~~~
-
-openTSNE can be easily installed from ``conda-forge`` with
-
-::
-
-   conda install --channel conda-forge opentsne
-
-`Conda package <https://anaconda.org/conda-forge/opentsne>`__
+openTSNEslim can be installed on all `supported versions of Python <https://devguide.python.org/versions/>`_.
 
 PyPi
 ~~~~
 
-openTSNE is also available through ``pip`` and can be installed with
+openTSNEslim is also available through ``pip`` and can be installed with
 
 ::
 
-   pip install opentsne
+   pip install opentsneslim
 
 `PyPi package <https://pypi.org/project/openTSNE>`__
 
-Installing from source
-~~~~~~~~~~~~~~~~~~~~~~
-
-If you wish to install openTSNE from source, please run
-
-::
-
-   pip install .
-
-
-in the root directory to install the appropriate dependencies and compile the necessary binary files.
-
-Please note that openTSNE requires a C/C++ compiler to be available on the system.
-
-In order for openTSNE to utilize multiple threads, the C/C++ compiler
-must support ``OpenMP``. In practice, almost all compilers
-implement this with the exception of older version of ``clang`` on OSX
-systems.
-
-To squeeze the most out of openTSNE, you may also consider installing
-FFTW3 prior to installation. FFTW3 implements the Fast Fourier
-Transform, which is heavily used in openTSNEslim. If FFTW3 is not available,
-openTSNE will use numpy’s implementation of the FFT, which is slightly
-slower than FFTW. The difference is only noticeable with large data sets
-containing millions of data points.
 
 A hello world example
 ---------------------
@@ -85,7 +60,7 @@ then, we'll import and run
 
 .. code:: python
 
-   from openTSNE import TSNE
+   from openTSNEslim import TSNE
 
    embedding = TSNE().fit(x)
 

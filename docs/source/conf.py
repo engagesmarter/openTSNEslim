@@ -14,12 +14,12 @@
 
 import os
 import sys
-sys.path.insert(0, os.path.abspath('openTSNEslim'))
+sys.path.insert(0, os.path.abspath('openTSNE'))
 
 
 # -- Project information -----------------------------------------------------
 
-project = 'openTSNEslim'
+project = 'openTSNE'
 copyright = u'2023, Pavlin Poličar'
 author = u'Pavlin Poličar'
 
@@ -135,7 +135,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'openTSNEslim.tex', 'openTSNE Documentation',
+    (master_doc, 'openTSNE.tex', 'openTSNE Documentation',
      u'Pavlin Poličar', 'manual'),
 ]
 
