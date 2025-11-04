@@ -4,9 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "openTSNEslim"
-version = "0.0.1"
+version = "1.0.2"
 authors = [
   { name="Pavlin Poličar", email="pavlin.g.p@gmail.com" },
+  { name="Sam Pink", email="sam@engagesmarter.com" },
 ]
 description = "openTSNEslim is a slimmed down version of openTSNE that doesn't require use of scikit-learn or scipy."
 readme = "README.rst"
@@ -19,7 +20,4 @@ license = "MIT"
 license-files = ["LICEN[CS]E*"]
 
 [project.urls]
-Homepage = "https://github.com/pavlin-policar/openTSNE"
-Issues = "https://github.com/pavlin-policar/openTSNE/issues"
-Homepage_fork = "https://github.com/engagesmarter/openTSNEslim"
-Issues_fork = "https://github.com/engagesmarter/openTSNEslim/issues"
+Homepage = "https://github.com/engagesmarter/openTSNEslim"
