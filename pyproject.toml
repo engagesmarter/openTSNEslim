@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "openTSNEslim"
-version = "1.0.4"
+version = "1.0.5"
 authors = [
   { name="Pavlin Poličar", email="pavlin.g.p@gmail.com" },
   { name="Sam Pink", email="sam@engagesmarter.ai" },
@@ -16,8 +16,6 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
 ]
-license = "MIT"
-license-files = ["LICEN[CS]E*"]
 
 [project.urls]
 Homepage = "https://github.com/engagesmarter/openTSNEslim"
