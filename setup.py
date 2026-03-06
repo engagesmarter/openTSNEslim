@@ -154,7 +154,7 @@ class CythonBuildExt(build_ext):
         # We don't want the compiler to optimize for system architecture if
         # we're building packages to be distributed by conda-forge, but if the
         # package is being built locally, this is desired
-        if not ("AZURE_BUILD" in os.environ or "CONDA_BUILD" in os.environ):
+        if not ("AZURE_BUILD" in os.environ or "CONDA_BUILD" in os.environ or "CIBUILDWHEEL" in os.environ):
             if platform.machine() == "ppc64le":
                 extra_compile_args += ["-mcpu=native"]
             if platform.machine() == "x86_64":

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "openTSNEslim"
-version = "1.0.5"
+version = "1.0.6"
 authors = [
   { name="Pavlin Poličar", email="pavlin.g.p@gmail.com" },
   { name="Sam Pink", email="sam@engagesmarter.ai" },
@@ -12,6 +12,9 @@ authors = [
 description = "openTSNEslim is a slimmed down version of openTSNE that doesn't require use of scikit-learn or scipy for inference. This is useful for creating a smaller bundle for deployment."
 readme = "README.rst"
 requires-python = ">=3.9"
+dependencies = [
+    "numpy>=1.16.6",
+]
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
@@ -19,3 +22,11 @@ classifiers = [
 
 [project.urls]
 Homepage = "https://github.com/engagesmarter/openTSNEslim"
+
+[tool.cibuildwheel]
+build = "cp310-* cp311-* cp312-* cp313-*"
+test-command = "python -c \"import openTSNE\""
+
+[tool.cibuildwheel.linux]
+archs = ["x86_64", "aarch64"]
+before-all = "yum install -y fftw-devel || apt-get install -y libfftw3-dev || true"
